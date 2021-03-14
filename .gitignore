@@ -1,0 +1,6 @@
+# Project exclude paths
+/mainapp/target/
+# Project exclude paths
+/dao/target/
+/service/target/
+/web/target/
