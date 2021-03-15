@@ -40,8 +40,12 @@ public class RoomController {
     }
 
     @PutMapping("/{roomId}")
-    public ResponseEntity<Void> updateRoom (@PathVariable("roomId") @RequestBody RoomBean room) {
-        roomService.saveRoom(room);
+    public ResponseEntity<Void> updateRoom (@PathVariable("roomId") Long roomId, @RequestBody RoomBean room) {
+        RoomBean roomFromDb = roomService.getRoomById(roomId);
+        roomFromDb.setName(room.getName());
+        roomFromDb.setCountry(room.getCountry());
+        roomFromDb.setBulb(room.getBulb());
+        roomService.saveRoom(roomFromDb);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

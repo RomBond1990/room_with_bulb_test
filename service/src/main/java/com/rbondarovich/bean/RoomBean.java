@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 public class RoomBean {
 
+    private Long id;
     private String name;
     private Boolean bulb;
     private String country;

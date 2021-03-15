@@ -21,7 +21,8 @@ public class Room {
     @Column(nullable = false, unique = true)
     private String name;
 
-    private Boolean bulb;
+    @Column(nullable = false)
+    private Boolean bulb = false;
 
     @Column(nullable = false)
     private String country;
