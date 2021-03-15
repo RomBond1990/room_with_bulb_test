@@ -8,10 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping(value = "api/rooms",
-        consumes = MediaType.APPLICATION_JSON_VALUE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/rooms")
 @RequiredArgsConstructor
 public class RoomController {
 

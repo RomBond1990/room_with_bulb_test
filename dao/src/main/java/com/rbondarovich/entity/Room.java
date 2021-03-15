@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -22,16 +23,9 @@ public class Room {
 
     private Boolean bulb;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id")
-    private User owner;
+    @Column(nullable = false)
+    private String country;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "country_id")
-    private Country country;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id")
-    private List<User> visitors = new ArrayList<>();
 
 }

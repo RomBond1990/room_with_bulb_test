@@ -10,10 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 public class RoomBean {
 
-    private Long id;
     private String name;
     private Boolean bulb;
-    private UserBean owner;
-    private CountryBean country;
-    private List<UserBean> visitors = new ArrayList<>();
+    private String country;
+
 }
