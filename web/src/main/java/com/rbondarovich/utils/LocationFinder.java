@@ -4,6 +4,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.Country;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -13,13 +14,15 @@ import java.util.*;
 
 import static com.rbondarovich.utils.HttpHeader.*;
 
-
+@Component
 public class LocationFinder {
 
     private static String UNKNOWN = "unknown";
-    private static String IP_DB = "mainapp/src/main/resources/IP_DB.mmdb";
+//    private static String IP_DB = "src/main/resources/IP_DB.mmdb";
+//            "D:\\JavaEE\\projects\\room_service\\web\\src\\main\\resources\\IP_DB.mmdb" ;
+//            "web/src/main/resources/IP_DB.mmdb";
 
-    public static String getRemoteIpFrom(HttpServletRequest request) {
+    public String getRemoteIpFrom(HttpServletRequest request) {
         String ip = null;
         int tryCount = 1;
 
@@ -50,7 +53,7 @@ public class LocationFinder {
         return ip;
     }
 
-    private static boolean isIpFound(String ip) {
+    private boolean isIpFound(String ip) {
         return ip != null && ip.length() > 0 && !UNKNOWN.equalsIgnoreCase(ip);
     }
 
@@ -68,16 +71,17 @@ public class LocationFinder {
         return result;
     }
 
-    public static Set<String> getCountryByIp(String ip) throws IOException, GeoIp2Exception {
+    public Set<String> getCountryByIp(String ip) throws IOException, GeoIp2Exception {
         Set<String> countryNames = new HashSet<>();
 
-        File database = new File(IP_DB);
+        ClassLoader classLoader = getClass().getClassLoader();
+        File database = new File(classLoader.getResource("IP_DB.mmdb").getFile());
         DatabaseReader dbReader = new DatabaseReader.Builder(database).build();
 
         InetAddress ipAddress = InetAddress.getByName(ip);
         CountryResponse response = dbReader.country(ipAddress);
-        Country country = response.getCountry();
 
+        Country country = response.getCountry();
         countryNames.add(country.getName());
         countryNames.add(country.getNames().get("ru"));
 

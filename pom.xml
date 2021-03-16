@@ -7,7 +7,6 @@
         <module>dao</module>
         <module>service</module>
         <module>web</module>
-        <module>mainapp</module>
     </modules>
 
     <parent>
@@ -24,6 +23,7 @@
     <description>test for ITS Partner</description>
 
     <properties>
+        <mainClass>com.rbondarovich.Application</mainClass>
         <java.version>11</java.version>
         <app.version>0.0.1-SNAPSHOT</app.version>
         <modelmapper.version>2.3.8</modelmapper.version>
@@ -84,6 +84,13 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package com.rbondarovich;
+package com.rbondarovich.api;
 
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.rbondarovich.bean.RoomBean;
@@ -22,6 +22,7 @@ import java.util.Set;
 public class RoomController {
 
     private final RoomServiceImpl roomService;
+    private final LocationFinder locationFinder;
 
     @GetMapping
     public ResponseEntity<Iterable<RoomBean>> getAllRooms() {
@@ -34,7 +35,7 @@ public class RoomController {
     @GetMapping("/{roomId}")
     public ResponseEntity<RoomBean> getRoomById(@PathVariable("roomId") Long roomId, HttpServletRequest request) throws IOException, GeoIp2Exception {
         RoomBean room = roomService.getRoomById(roomId);
-        if (checkingAccessToRoom(room, request)) {
+        if (!checkingAccessToRoom(room, request)) {
             throw new WrongRoomException("You can't enter the room which place in another country");
         }
         ResponseEntity<RoomBean> result = new ResponseEntity<>(room, HttpStatus.OK);
@@ -66,8 +67,8 @@ public class RoomController {
 
     private Boolean checkingAccessToRoom(RoomBean room, HttpServletRequest request) throws IOException, GeoIp2Exception {
         Boolean result = false;
-        String ip = LocationFinder.getRemoteIpFrom(request);
-        Set<String> countryNames = LocationFinder.getCountryByIp(ip);
+//        String ip = locationFinder.getRemoteIpFrom(request);
+        Set<String> countryNames = locationFinder.getCountryByIp("37.214.49.20");
         for (String countryName : countryNames) {
             if (countryName.equals(room.getCountry())) result = true;
         }
