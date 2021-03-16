@@ -2,6 +2,7 @@ package com.rbondarovich.impl;
 
 import com.rbondarovich.bean.RoomBean;
 import com.rbondarovich.entity.Room;
+import com.rbondarovich.exception.ResourceNotFoundException;
 import com.rbondarovich.interfaces.RoomService;
 import com.rbondarovich.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +28,10 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public RoomBean getRoomById(Long id) {
-        Room room = roomRepository.getOne(id);
+    public RoomBean getRoomById(Long id) throws ResourceNotFoundException{
+        Room room = roomRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Room not exist with id: " + id));
         RoomBean roomBean = converter.convertToBean(room, RoomBean.class);
+
         return roomBean;
     }
 
